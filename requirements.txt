@@ -1,0 +1,13 @@
+pytest
+pylint
+sensible
+jupyter
+pytest-cov
+pandas
+nbval
+click
+sklearn
+seaborn
+matplotlib
+PyGithub
+gitpython
