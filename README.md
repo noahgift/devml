@@ -7,7 +7,8 @@ Machine Learning around Developer Productivity
 
 You can find out stats for a checkout or a directory full of checkout as follows
 
-```python
+```bash
+
 python dml.py gstats author --path ~/src/mycompanyrepo(s)
 Top Commits By Author:                     author_name  commits
 0                     John Smith     3059
