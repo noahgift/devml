@@ -5,7 +5,7 @@ install:
 	pip install -r requirements.txt
 
 test:
-	#PYTHONPATH=. && pytest -vv --cov=devml tests/*.py
+	python -m pytest -vv --cov=devml tests/*.py
 	#PYTHONPATH=. && py.test --nbval-lax notebooks/*.ipynb
 
 lint:
