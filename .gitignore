@@ -1,4 +1,7 @@
+#ignore the project directory, contains sensitive data
+project 
 .vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
