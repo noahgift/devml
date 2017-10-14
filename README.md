@@ -3,7 +3,7 @@
 # devml
 Machine Learning around Developer Productivity
 
-## Basic Usage
+## Basic command-line Usage
 
 You can find out stats for a checkout or a directory full of checkout as follows
 
