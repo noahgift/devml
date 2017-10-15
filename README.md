@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/noahgift/devml.svg?style=svg)](https://circleci.com/gh/noahgift/devml)
 
 # devml
-Machine Learning around Developer Productivity and Github Utilities
+Machine Learning, Statistics and Utilities around Developer Productivity
 
 A few handy bits of functionality:
 
