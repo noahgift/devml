@@ -67,3 +67,36 @@ Out[4]:
 4   Truck Pritter      1441
 
 ```
+
+## Clone all repos in Github using API
+
+```bash
+In [1]: from devml import (mkdata, stats, state, fetch_repo)
+
+In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
+In [3]: fetch_repo.clone_org_repos(token, org, 
+        dest, branch="master")
+017-10-14 17:11:36,590 - devml - INFO - Creating Checkout Root:  /tmp/checkout
+2017-10-14 17:11:37,346 - devml - INFO - Found Repo # 1 REPO NAME: flask , URL: git@github.com:pallets/flask.git 
+2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 2 REPO NAME: pallets-sphinx-themes , URL: git@github.com:pallets/pallets-sphinx-themes.git 
+2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 3 REPO NAME: markupsafe , URL: git@github.com:pallets/markupsafe.git 
+2017-10-14 17:11:37,348 - devml - INFO - Found Repo # 4 REPO NAME: jinja , URL: git@github.com:pallets/jinja.git 
+2017-10-14 17:11:37,349 - devml - INFO - Found Repo # 5 REPO NAME: werkzeug , URL: git@githu
+In [4]: !ls -l /tmp/checkout
+total 0
+drwxr-xr-x  21 noahgift  wheel  672 Oct 14 17:11 click
+drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 flask
+drwxr-xr-x  11 noahgift  wheel  352 Oct 14 17:11 flask-docs
+drwxr-xr-x  12 noahgift  wheel  384 Oct 14 17:11 flask-ext-migrate
+drwxr-xr-x   8 noahgift  wheel  256 Oct 14 17:11 flask-snippets
+drwxr-xr-x  14 noahgift  wheel  448 Oct 14 17:11 flask-website
+drwxr-xr-x  18 noahgift  wheel  576 Oct 14 17:11 itsdangerous
+drwxr-xr-x  23 noahgift  wheel  736 Oct 14 17:11 jinja
+drwxr-xr-x  18 noahgift  wheel  576 Oct 14 17:11 markupsafe
+drwxr-xr-x   4 noahgift  wheel  128 Oct 14 17:11 meta
+drwxr-xr-x  10 noahgift  wheel  320 Oct 14 17:11 pallets-sphinx-themes
+drwxr-xr-x   9 noahgift  wheel  288 Oct 14 17:11 pocoo-sphinx-themes
+drwxr-xr-x  15 noahgift  wheel  480 Oct 14 17:11 website
+drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
+```
+
