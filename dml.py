@@ -152,7 +152,7 @@ def churn(path, limit, ext):
     """Finds churn by file for a repo
 
     Example is run after checkout:
-    python dml.py gstats churn --path /Users/noah/src/wulio/checkout
+    python dml.py gstats churn --path /Users/noah/src/wulio/checkout --ext .py
     """
 
     df = post_processing.git_churn_df(path=path)
@@ -164,18 +164,26 @@ def churn(path, limit, ext):
 
 @gstats.command("metachurn")
 @click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
-def metachurn(path):
+@click.option("--ext", default=False, help="optionally can show churn by ext: i.e. '.py'")
+@click.option("--statistic", default="median", type=click.Choice(["median", "describe"]))
+def metachurn(path,ext, statistic):
     """Finds median churn metadata for a repo
 
     Example is run after checkout:
-    python dml.py gstats metachurn --path /Users/noah/src/wulio/checkout
+    python dml.py gstats metachurn --path /Users/noah/src/wulio/checkout --ext .py
     """
 
     df = post_processing.git_churn_df(path=path)
     metadata_df = post_processing.git_populate_file_metatdata(df)
-    churned = metadata_df.groupby("extension").median()
+    if ext:
+        metadata_df = metadata_df[metadata_df.extension == ".py"]
+    if statistic == "median":
+        churned = metadata_df.groupby("extension").median()
+        click.echo("MEDIAN Statistics:\n")
+    if statistic == "describe":
+        churned = metadata_df.groupby("extension").describe()
+        click.echo("DESCRIPTIVE STATISTICS:\n") 
     click.echo(churned)
-
 
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
