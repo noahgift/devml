@@ -99,10 +99,10 @@ drwxr-xr-x  15 noahgift  wheel  480 Oct 14 17:11 website
 drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ```
 
-## Get Activity Statistics for a Tree of Checkouts or a Checkout
+## Advanced CLI:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
 ```base
-python dml.py gstats activity --path /tmp/checkout --sort active_days
+ ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
 
 Top Unique Active Days:               author_name  active_days active_duration  active_ratio
 86         Armin Ronacher          989       3817 days      0.260000
