@@ -120,7 +120,7 @@ drwxr-xr-x  15 noahgift  wheel  480 Oct 14 17:11 website
 drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ```
 
-## Advanced CLI:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
+## Advanced CLI-Author:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
 ```base
  ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
@@ -150,7 +150,81 @@ Top Unique Active Days:               author_name  active_days active_duration  
 391  Jochen Kupperschmidt           10       3060 days      0.000000
 ```
 
+## Advanced CLI-Churn:  Get churn by file type
 
+#### Get the top ten files sorted by churn count with the extension .py: 
 
+```bash
+✗ python dml.py gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
+2017-10-15 12:10:55,783 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
+                       files  churn_count  line_count extension  \
+1            b'flask/app.py'          316      2183.0       .py   
+3        b'flask/helpers.py'          176      1019.0       .py   
+5    b'tests/flask_tests.py'          127         NaN       .py   
+7                b'flask.py'          104         NaN       .py   
+8                b'setup.py'           80       112.0       .py   
+10           b'flask/cli.py'           75       759.0       .py   
+11      b'flask/wrappers.py'           70       194.0       .py   
+12      b'flask/__init__.py'           65        49.0       .py   
+13           b'flask/ctx.py'           62       415.0       .py   
+14  b'tests/test_helpers.py'           62       888.0       .py   
+
+    relative_churn  
+1             0.14  
+3             0.17  
+5              NaN  
+7              NaN  
+8             0.71  
+10            0.10  
+11            0.36  
+12            1.33  
+13            0.15  
+14            0.07  
+```
+#### Get descriptive statistics for extension .py and compare to another repository
+
+```bash
+(.devml) ➜  devml git:(master) ✗ python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic describe
+2017-10-15 12:30:18,563 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
+DESCRIPTIVE STATISTICS:
+
+          churn_count                                                    \
+                count       mean        std  min  25%  50%   75%    max   
+extension                                                                 
+.py             204.0  12.509804  30.449423  1.0  1.0  2.0  11.0  316.0   
+
+          line_count            ...                 relative_churn           \
+               count       mean ...     75%     max          count     mean   
+extension                       ...                                           
+.py             77.0  204.12987 ...   227.0  2183.0           77.0  0.23987   
+
+                                                  
+                std   min   25%   50%   75%  max  
+extension                                         
+.py        0.398271  0.01  0.06  0.13  0.24  2.5  
+
+[1 rows x 24 columns]
+(.devml) ➜  devml git:(master) ✗ python dml.py gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic describe
+2017-10-15 12:30:47,543 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
+DESCRIPTIVE STATISTICS:
+
+          churn_count                                              line_count  \
+                count      mean       std  min  25%  50%  75%  max      count   
+extension                                                                       
+.py              17.0  1.529412  0.799816  1.0  1.0  1.0  2.0  4.0       16.0   
+
+                     ...                  relative_churn                       \
+               mean  ...      75%     max          count     mean    std  min   
+extension            ...                                                        
+.py        158.8125  ...   122.25  1490.0           16.0  0.04125  0.045  0.0   
+
+                                   
+            25%   50%   75%   max  
+extension                          
+.py        0.02  0.02  0.06  0.18  
+
+[1 rows x 24 columns]
+
+```
 
 
