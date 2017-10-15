@@ -69,7 +69,7 @@ Out[4]:
 
 ## Clone all repos in Github using API
 
-```python
+```ipython
 In [1]: from devml import (mkdata, stats, state, fetch_repo)
 
 In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
@@ -98,4 +98,38 @@ drwxr-xr-x   9 noahgift  wheel  288 Oct 14 17:11 pocoo-sphinx-themes
 drwxr-xr-x  15 noahgift  wheel  480 Oct 14 17:11 website
 drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ```
+
+## Advanced CLI:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
+
+```base
+ ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
+
+Top Unique Active Days:               author_name  active_days active_duration  active_ratio
+86         Armin Ronacher          989       3817 days      0.260000
+501  Markus Unterwaditzer          342       1820 days      0.190000
+216            David Lord          129        712 days      0.180000
+664           Ron DuPlain           78        854 days      0.090000
+444         Kenneth Reitz           68       2566 days      0.030000
+197      Daniel Neuhäuser           42       1457 days      0.030000
+297          Georg Brandl           41       1337 days      0.030000
+196     Daniel Neuhäuser           36        435 days      0.080000
+450      Keyan Pishdadian           28        885 days      0.030000
+169     Christopher Grebs           28       1515 days      0.020000
+666    Ronny Pfannschmidt           27       3060 days      0.010000
+712           Simon Sapin           22        793 days      0.030000
+372           Jeff Widman           19        840 days      0.020000
+427    Julen Ruiz Aizpuru           16         36 days      0.440000
+21                 Adrian           16       1935 days      0.010000
+569        Nicholas Wiles           14        197 days      0.070000
+912                lord63           14        692 days      0.020000
+756           ThiefMaster           12       1287 days      0.010000
+763       Thomas Waldmann           11       1560 days      0.010000
+628            Priit Laes           10       1567 days      0.010000
+23        Adrian Moennich           10        521 days      0.020000
+391  Jochen Kupperschmidt           10       3060 days      0.000000
+```
+
+
+
+
 
