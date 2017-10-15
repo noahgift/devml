@@ -11,6 +11,8 @@ A few handy bits of functionality:
 
 ## Get environment setup
 
+Code is written to support Python 3.6 or greater.  You can get that here:  https://www.python.org/downloads/release/python-360/.
+
 #### An easy way to run the project locally is to check the repo out and in the root of the repo run:
 
 ```bash
