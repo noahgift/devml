@@ -14,6 +14,13 @@ A few handy bits of functionality:
 The command-line tools expects for you to create a project directory with a config.json file.
 Inside the config.json file, you will need to provide an oath token.  You can find information about how to do that here:  https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/.
 
+Alternately, you can pass these values in via the python API or via the command-line as options.
+They stand for the following:
+
+* org:  Github Organization (To clone entire tree of repos)
+* checkout_dir:  place to checkout 
+* oath:  personal oath token generated from Github
+
 ```bash
 ➜  devml git:(master) ✗ cat project/config.json 
 {
