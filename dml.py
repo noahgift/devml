@@ -147,7 +147,8 @@ def activity(path, sort):
 @gstats.command("churn")
 @click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
 @click.option("--limit", default=25, help="amount of records to show")
-def churn(path, limit):
+@click.option("--ext", default=False, help="optionally can show churn by ext: i.e. '.py'")
+def churn(path, limit, ext):
     """Finds churn by file for a repo
 
     Example is run after checkout:
@@ -156,6 +157,8 @@ def churn(path, limit):
 
     df = post_processing.git_churn_df(path=path)
     metadata_df = post_processing.git_populate_file_metatdata(df)
+    if ext:
+        metadata_df = metadata_df[metadata_df.extension == ".py"]
     churned = metadata_df.sort_values(by="churn_count", ascending=False).head(limit)
     click.echo(churned)
 
