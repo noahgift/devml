@@ -19,11 +19,11 @@ https://github.com/noahgift/devml/blob/master/notebooks/github_data_exploration.
 
 ## Explore Jupyter Notebooks on Repository Churn
 
-All Files Churned by type:
+#### All Files Churned by type:
 
 ![Pallets Project Relative Churn by file type](https://user-images.githubusercontent.com/58792/31587879-59d9724e-b19e-11e7-942e-999c02d7b566.png)
 
-Summary Churn Statistics by type:
+#### Summary Churn Statistics by type:
 
 ![Pallets Project by file type Churn statistics](https://user-images.githubusercontent.com/58792/31587931-5d79199e-b19f-11e7-89c2-98185fdef909.png)
 
