@@ -95,7 +95,36 @@ def author_active_days(df):
     df.index.name = "author_name"
     return df
 
+def author_unique_active_days(df, sort_by="active_days"):
+    """DataFrame of Unique Active Days by Author With Descending Order
+    
+    author_name	unique_days
+    46	Armin Ronacher	271
+    260	Markus Unterwaditzer	145
+    """
 
+    author_list = []
+    count_list = []
+    duration_active_list = []
+    ad = author_active_days(df)
+    for author in ad.index:
+        author_list.append(author) 
+        vals = ad.loc[author]
+        vals.dropna(inplace=True)
+        vals.drop_duplicates(inplace=True)
+        vals.sort_values(axis=0,inplace=True)
+        vals.reset_index(drop=True, inplace=True)
+        count_list.append(vals.count())
+        duration_active_list.append(vals[len(vals)-1]-vals[0])
+    df_author_ud = DataFrame()   
+    df_author_ud["author_name"] = author_list
+    df_author_ud["active_days"] = count_list
+    df_author_ud["active_duration"] = duration_active_list
+    df_author_ud["active_ratio"] = \
+        round(df_author_ud["active_days"]/df_author_ud["active_duration"].dt.days, 2)
+    df_author_ud = df_author_ud.iloc[1:] #first row is =
+    df_author_ud = df_author_ud.sort_values(by=sort_by, ascending=False)
+    return df_author_ud
 
 
 

@@ -130,6 +130,20 @@ def author(path):
     author_counts = stats.author_commit_count(org_df)
     click.echo("Top Commits By Author: %s " % author_counts)
 
+@gstats.command("activity")
+@click.option("--path", default=CHECKOUT_DIR, help="path to org")
+@click.option("--sort", default="active_days", help="can sorty by:  active_days, active_ratio, active_duration")
+def activity(path, sort):
+    """Creates Activity Stats
+
+    Example is run after checkout:
+    python dml.py gstats activity --path /Users/noah/src/wulio/checkout
+    """
+
+    org_df = mkdata.create_org_df(path)
+    activity_counts = stats.author_unique_active_days(org_df, sort_by=sort)
+    click.echo("Top Unique Active Days: %s " % activity_counts)
+
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
 def org_stats_report(path):

@@ -53,7 +53,7 @@ def unique_days(df):
     Returns a numpy.ndarray
     """
 
-    ud = df["date"].map(pd.Timestamp.date).unique()
+    ud = df.index.map(pd.Timestamp.date).unique()
     return ud
 
 def unique_days_count(nda):
