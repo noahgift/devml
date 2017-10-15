@@ -51,6 +51,14 @@ TOTAL                        507    295    42%
 ....
 ```
 
+You don't use virtualenv or don't want to use it.  No problem, just run `make all` it should probably work if you have python 3.6 installed.
+
+```bash
+
+make all
+```
+
+
 ## Explore Jupyter Notebooks on Github Organizations
 
 You can explore combined datasets here using this example as a starter:
