@@ -17,6 +17,10 @@ https://github.com/noahgift/devml/blob/master/notebooks/github_data_exploration.
 
 ![Pallets Project](https://user-images.githubusercontent.com/58792/31581904-66ee7fc0-b12a-11e7-804a-7b0f1728f30a.png)
 
+## Explore Jupyter Notebooks on Repository Churn
+
+
+
 ## Expected Configuration
 
 The command-line tools expects for you to create a project directory with a config.json file.
