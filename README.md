@@ -233,6 +233,8 @@ Top Unique Active Days:               author_name  active_days active_duration  
 ```
 #### Get descriptive statistics for extension .py and compare to another repository
 
+In this example, flask, this repo and cpython are all compared to see how the median churn is.
+
 ```bash
 (.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
 2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
@@ -248,6 +250,14 @@ MEDIAN Statistics:
            churn_count  line_count  relative_churn
 extension                                         
 .py                  1        62.5            0.02
+
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/cpython --ext .py --statistic median
+2017-10-15 12:42:19,260 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/cpython]
+MEDIAN Statistics:
+
+           churn_count  line_count  relative_churn
+extension                                         
+.py                  7       169.5             0.1
 
 ```
 
