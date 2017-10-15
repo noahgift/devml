@@ -9,6 +9,14 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
+## Explore Jupyter Notebooks on Github Organizations
+
+You can explore combined datasets here using this example as a starter:
+
+https://github.com/noahgift/devml/blob/master/notebooks/github_data_exploration.ipynb
+
+
+
 ## Expected Configuration
 
 The command-line tools expects for you to create a project directory with a config.json file.
