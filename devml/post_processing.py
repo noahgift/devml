@@ -9,7 +9,7 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/icse05churn.
 
 """
 import os
-
+from pathlib import Path
 from subprocess import (Popen, PIPE)
 from collections import Counter
 
@@ -41,19 +41,26 @@ def file_len(fname):
     """Count lines in file else return np.nan if file doesn't exist"""
 
     if os.path.isfile(fname):
-        with open(fname) as f:
+        with open(fname, 'rb') as f:
             i = 1
             for i, _ in enumerate(f):
                 pass
         return i + 1
     return np.nan
 
+def file_ext(fname):
+    """Gets file extension"""
+
+    ext = Path(str(fname)).suffix.strip("'")
+    return ext
+
 def git_populate_file_metatdata(df):
     """For all of the files found in git metadata, generate data about them"""
 
 
     df['line_count'] = df['files'].apply(file_len)
-    df['relative_churn'] = df['churn_count']/df['line_count']
+    df['extension'] = df['files'].apply(file_ext)
+    df['relative_churn'] = round(df['churn_count']/df['line_count'],2)
     #finally, sort and create new index
     df_sorted = df.sort_values(["churn_count", "relative_churn"], ascending=[False, False])
     df_sorted.index = list(range(1,len(df_sorted) + 1))

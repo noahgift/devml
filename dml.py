@@ -142,7 +142,37 @@ def activity(path, sort):
 
     org_df = mkdata.create_org_df(path)
     activity_counts = stats.author_unique_active_days(org_df, sort_by=sort)
-    click.echo("Top Unique Active Days: %s " % activity_counts)
+    click.echo(activity_counts)
+
+@gstats.command("churn")
+@click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
+@click.option("--limit", default=25, help="amount of records to show")
+def churn(path, limit):
+    """Finds churn by file for a repo
+
+    Example is run after checkout:
+    python dml.py gstats churn --path /Users/noah/src/wulio/checkout
+    """
+
+    df = post_processing.git_churn_df(path=path)
+    metadata_df = post_processing.git_populate_file_metatdata(df)
+    churned = metadata_df.sort_values(by="churn_count", ascending=False).head(limit)
+    click.echo(churned)
+
+@gstats.command("metachurn")
+@click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
+def metachurn(path):
+    """Finds median churn metadata for a repo
+
+    Example is run after checkout:
+    python dml.py gstats metachurn --path /Users/noah/src/wulio/checkout
+    """
+
+    df = post_processing.git_churn_df(path=path)
+    metadata_df = post_processing.git_populate_file_metatdata(df)
+    churned = metadata_df.groupby("extension").median()
+    click.echo(churned)
+
 
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
