@@ -69,7 +69,7 @@ Out[4]:
 
 ## Clone all repos in Github using API
 
-```python
+```ipython
 In [1]: from devml import (mkdata, stats, state, fetch_repo)
 
 In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
@@ -101,7 +101,7 @@ drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 
 ## Get Activity Statistics for a Tree of Checkouts or a Checkout
 
-```python
+```base
 python dml.py gstats activity --path /tmp/checkout --sort active_days
 
 Top Unique Active Days:               author_name  active_days active_duration  active_ratio
