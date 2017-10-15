@@ -263,4 +263,18 @@ extension
 
 ```
 
+## FAQ
+
+#### What is Churn and Why Do I Care?
+
+Code churn is the amount of times a file has been modified.  Relative churn is the amount of times it has been modified relative to lines of code.  Research into defects in software has shown that relative code churn is highly predictive of defects, i.e., the greater the relative churn number the higher the amount of defects.
+
+"Increase in relative code churn measures is
+accompanied by an increase in system defect
+density; "
+
+You can read the entire study here:  https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/icse05churn.pdf
+
+
+
 
