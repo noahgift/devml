@@ -9,6 +9,48 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
+## Get environment setup
+
+#### An easy way to run the project locally is to check the repo out and in the root of the repo run:
+
+```bash
+make setup
+```
+This create a virtualenv in  ~/.devml
+
+#### Next, source that virtualenv:
+
+```bash
+source ~/.devml/bin/activate
+```
+
+#### Run Make All (installs, lints and tests)
+```bash
+make all
+
+# #Example output
+#(.devml) ➜  devml git:(master) make all                    
+#pip install -r requirements.txt
+#Requirement already satisfied: pytest in /Users/noahgift/.devml/lib/python3.6/site-packages (from -r requirements.txt (line #1)
+---------- coverage: platform darwin, python 3.6.2-final-0 -----------
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+devml/__init__.py              1      0   100%
+devml/author_stats.py          6      6     0%
+devml/fetch_repo.py           54     42    22%
+devml/mkdata.py               84     21    75%
+devml/org_stats.py            76     55    28%
+devml/post_processing.py      50     35    30%
+devml/state.py                29      9    69%
+devml/stats.py                55     43    22%
+devml/ts.py                   29     14    52%
+devml/util.py                 12      4    67%
+dml.py                       111     66    41%
+----------------------------------------------
+TOTAL                        507    295    42%
+....
+```
+
 ## Explore Jupyter Notebooks on Github Organizations
 
 You can explore combined datasets here using this example as a starter:
