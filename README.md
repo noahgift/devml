@@ -50,8 +50,7 @@ Top Commits By Author:                     author_name  commits
 
 ## Basic API Usage (Converting a tree of repo(s) into a pandas DataFrame)
 
-```bash
-
+```python
 In [1]: from devml import (mkdata, stats)
 
 In [2]: org_df = mkdata.create_org_df(path=/src/mycompanyrepo(s)")
@@ -70,7 +69,7 @@ Out[4]:
 
 ## Clone all repos in Github using API
 
-```bash
+```python
 In [1]: from devml import (mkdata, stats, state, fetch_repo)
 
 In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
