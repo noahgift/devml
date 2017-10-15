@@ -21,6 +21,10 @@ https://github.com/noahgift/devml/blob/master/notebooks/github_data_exploration.
 
 #### All Files Churned by type:
 
+You can explore File Metadata exploration example here: 
+
+https://github.com/noahgift/devml/blob/master/notebooks/repo_file_exploration.ipynb
+
 ![Pallets Project Relative Churn by file type](https://user-images.githubusercontent.com/58792/31587879-59d9724e-b19e-11e7-942e-999c02d7b566.png)
 
 #### Summary Churn Statistics by type:
