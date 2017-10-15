@@ -234,46 +234,20 @@ Top Unique Active Days:               author_name  active_days active_duration  
 #### Get descriptive statistics for extension .py and compare to another repository
 
 ```bash
-(.devml) ➜  devml git:(master) ✗ python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic describe
-2017-10-15 12:30:18,563 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
-DESCRIPTIVE STATISTICS:
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
+2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
+MEDIAN Statistics:
 
-          churn_count                                                    \
-                count       mean        std  min  25%  50%   75%    max   
-extension                                                                 
-.py             204.0  12.509804  30.449423  1.0  1.0  2.0  11.0  316.0   
-
-          line_count            ...                 relative_churn           \
-               count       mean ...     75%     max          count     mean   
-extension                       ...                                           
-.py             77.0  204.12987 ...   227.0  2183.0           77.0  0.23987   
-
-                                                  
-                std   min   25%   50%   75%  max  
+           churn_count  line_count  relative_churn
 extension                                         
-.py        0.398271  0.01  0.06  0.13  0.24  2.5  
+.py                  2        85.0            0.13
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic median
+2017-10-15 12:40:10,999 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
+MEDIAN Statistics:
 
-[1 rows x 24 columns]
-(.devml) ➜  devml git:(master) ✗ python dml.py gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic describe
-2017-10-15 12:30:47,543 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
-DESCRIPTIVE STATISTICS:
-
-          churn_count                                              line_count  \
-                count      mean       std  min  25%  50%  75%  max      count   
-extension                                                                       
-.py              17.0  1.529412  0.799816  1.0  1.0  1.0  2.0  4.0       16.0   
-
-                     ...                  relative_churn                       \
-               mean  ...      75%     max          count     mean    std  min   
-extension            ...                                                        
-.py        158.8125  ...   122.25  1490.0           16.0  0.04125  0.045  0.0   
-
-                                   
-            25%   50%   75%   max  
-extension                          
-.py        0.02  0.02  0.06  0.18  
-
-[1 rows x 24 columns]
+           churn_count  line_count  relative_churn
+extension                                         
+.py                  1        62.5            0.02
 
 ```
 
