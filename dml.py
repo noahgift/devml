@@ -119,7 +119,7 @@ def gstats():
 
 @gstats.command("author")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
-def author(path):
+def author_cmd(path):
     """Creates Author Stats
 
     Example is run after checkout:
@@ -165,7 +165,7 @@ def churn(path, limit, ext):
 @gstats.command("metachurn")
 @click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
 @click.option("--ext", default=False, help="optionally can show churn by ext: i.e. '.py'")
-@click.option("--statistic", default="median", type=click.Choice(["median", "describe"]))
+@click.option("--statistic", default="median", type=click.Choice(["median", "describe", "max"]))
 def metachurn(path,ext, statistic):
     """Finds median churn metadata for a repo
 
@@ -183,7 +183,38 @@ def metachurn(path,ext, statistic):
     if statistic == "describe":
         churned = metadata_df.groupby("extension").describe()
         click.echo("DESCRIPTIVE STATISTICS:\n") 
+    if statistic == "max":
+        churned = metadata_df.groupby("extension").max()
+        click.echo("Maximum:\n") 
     click.echo(churned)
+
+@gstats.command("authorchurnmeta")
+@click.option("--path", default=CHECKOUT_DIR,help="path to checkout")
+@click.option("--author", default=False, help="optionally can show churn by ext: i.e. '.py'")
+@click.option("--ext", default=False, help="optionally can show churn by ext: i.e. '.py'")
+def author_churn(path, author, ext):
+    """Descriptive Meta Churn For Author
+
+    Example is run after checkout:
+    python dml.py gstats authorchurnmeta --author "Armin Ronacher" --path /Users/noah/src/wulio/checkout --ext .py
+    """
+
+    df = post_processing.git_churn_df(path=path)
+    metadata_df = post_processing.git_populate_file_metatdata(df)
+    if ext:
+        metadata_df = metadata_df[metadata_df.extension == ".py"]
+    authors = post_processing.author_churn_df(df)
+    subset = authors[["files",author]]
+    def file_decode(file):
+        """decode"""
+
+        file = file.decode("ASCII")
+        return file
+    df['files'] = df['files'].apply(file_decode)
+    dfa = df.merge(subset, how="outer", on='files')
+    dfa['author_rel_churn'] = round(dfa[author]/dfa['line_count'], 3)
+    click.echo("DESCRIPTIVE STATS FOR AUTHOR CHURN\n")
+    click.echo(dfa['author_rel_churn'].describe())
 
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")

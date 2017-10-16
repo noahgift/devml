@@ -14,6 +14,7 @@ from subprocess import (Popen, PIPE)
 from collections import Counter
 
 import pandas as pd
+from pandas import DataFrame
 import numpy as np
 
 from sensible.loginit import logger
@@ -23,6 +24,14 @@ from .mkdata import subdirs
 
 #Git Globals
 CHURN_GIT_CMD = "git log --name-only --pretty=format:"
+AUTHOR_CHURN_CMD =\
+ 'git log --follow --no-merges --pretty=format:"Commit Hash: %H, Author: %aN, Date: %aD"'
+
+def file_decode(file):
+    """decode"""
+
+    file = file.decode("ASCII")
+    return file
 
 def git_churn_df(path):
     """Returns a dataframe of churned files in a git repository"""
@@ -35,6 +44,7 @@ def git_churn_df(path):
     #Use fancy counter, but convert back to a dict
     churn_count = dict(Counter(git_churn.split()))
     df = pd.DataFrame(list(churn_count.items()),columns=["files", "churn_count"])
+    #df['files'] = df['files'].apply(file_decode)
     return df
 
 def file_len(fname):
@@ -54,9 +64,42 @@ def file_ext(fname):
     ext = Path(str(fname)).suffix.strip("'")
     return ext
 
+def retrieve_churn_by_authors(fname):
+    """Author churn counts by file"""
+
+    fname = fname.decode("ASCII") #ensure not binary
+    fname_cmd = "{AUTHOR_CHURN_CMD} {fname}".format(AUTHOR_CHURN_CMD=AUTHOR_CHURN_CMD,
+                                                    fname=fname)    
+    churn_msg = "Running churn cmd: [%s] at path [%s]" % (fname_cmd, os.getcwd())
+    log.info(churn_msg)
+    p = Popen(fname_cmd, shell=True, stdout=PIPE)
+    (git_churn, _) = p.communicate()
+    git_log = git_churn.decode('utf8').strip('\n\x1e').split("\x1e")
+    git_log = [row.strip().split("\x1f") for row in git_log]
+    git_log = git_log[0][0].split(",")
+    cnt = Counter()
+    for line in git_log:
+        if "Author" in line:
+            _,name = line.split(":")
+            name = name.strip()
+            cnt[name] += 1 
+    return dict(cnt)
+
+def author_churn_df(df):
+    """Creates churn for all files by authors"""
+
+    files = []
+    data = []
+    df_metadata = git_populate_file_metatdata(df)
+    for file in df_metadata['files']:
+        files.append(file.decode("ASCII"))
+        data.append(retrieve_churn_by_authors(file))
+        df = DataFrame.from_dict(data, orient='columns', dtype=None)    
+        df['files'] = files
+    return df
+
 def git_populate_file_metatdata(df):
     """For all of the files found in git metadata, generate data about them"""
-
 
     df['line_count'] = df['files'].apply(file_len)
     df['extension'] = df['files'].apply(file_ext)

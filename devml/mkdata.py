@@ -13,7 +13,7 @@ log = logger(__name__)
 GIT_COMMIT_FIELDS = ['id', 'author_name', 'author_email', 'date', 'message']
 GIT_LOG_FORMAT = ['%H', '%an', '%ae', '%ad', '%s']
 GIT_LOG_FORMAT = '%x1f'.join(GIT_LOG_FORMAT) + '%x1e'
-GIT_LOG_CMD = 'git log --date=local --format="%s"' % GIT_LOG_FORMAT
+GIT_LOG_CMD = 'git log --no-merges --date=local --format="%s"' % GIT_LOG_FORMAT
 GIT_REPO_NAME =  """basename `git rev-parse --show-toplevel`"""
 GIT_CSV_COLUMN_NAMES = ["date","author_email", "author_name",  
                                         "id", "message", "repo"]
