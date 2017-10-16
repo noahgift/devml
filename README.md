@@ -9,6 +9,58 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
+## Get environment setup
+
+Code is written to support Python 3.6 or greater.  You can get that here:  https://www.python.org/downloads/release/python-360/.
+
+#### An easy way to run the project locally is to check the repo out and in the root of the repo run:
+
+```bash
+make setup
+```
+This create a virtualenv in  ~/.devml
+
+#### Next, source that virtualenv:
+
+```bash
+source ~/.devml/bin/activate
+```
+
+#### Run Make All (installs, lints and tests)
+```bash
+make all
+
+# #Example output
+#(.devml) ➜  devml git:(master) make all                    
+#pip install -r requirements.txt
+#Requirement already satisfied: pytest in /Users/noahgift/.devml/lib/python3.6/site-packages (from -r requirements.txt (line #1)
+---------- coverage: platform darwin, python 3.6.2-final-0 -----------
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+devml/__init__.py              1      0   100%
+devml/author_stats.py          6      6     0%
+devml/fetch_repo.py           54     42    22%
+devml/mkdata.py               84     21    75%
+devml/org_stats.py            76     55    28%
+devml/post_processing.py      50     35    30%
+devml/state.py                29      9    69%
+devml/stats.py                55     43    22%
+devml/ts.py                   29     14    52%
+devml/util.py                 12      4    67%
+dml.py                       111     66    41%
+----------------------------------------------
+TOTAL                        507    295    42%
+....
+```
+
+You don't use virtualenv or don't want to use it.  No problem, just run `make all` it should probably work if you have python 3.6 installed.
+
+```bash
+
+make all
+```
+
+
 ## Explore Jupyter Notebooks on Github Organizations
 
 You can explore combined datasets here using this example as a starter:
@@ -120,7 +172,7 @@ drwxr-xr-x  15 noahgift  wheel  480 Oct 14 17:11 website
 drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ```
 
-## Advanced CLI:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
+## Advanced CLI-Author:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
 ```base
  ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
@@ -150,6 +202,78 @@ Top Unique Active Days:               author_name  active_days active_duration  
 391  Jochen Kupperschmidt           10       3060 days      0.000000
 ```
 
+## Advanced CLI-Churn:  Get churn by file type
+
+#### Get the top ten files sorted by churn count with the extension .py: 
+
+```bash
+✗ python dml.py gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
+2017-10-15 12:10:55,783 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
+                       files  churn_count  line_count extension  \
+1            b'flask/app.py'          316      2183.0       .py   
+3        b'flask/helpers.py'          176      1019.0       .py   
+5    b'tests/flask_tests.py'          127         NaN       .py   
+7                b'flask.py'          104         NaN       .py   
+8                b'setup.py'           80       112.0       .py   
+10           b'flask/cli.py'           75       759.0       .py   
+11      b'flask/wrappers.py'           70       194.0       .py   
+12      b'flask/__init__.py'           65        49.0       .py   
+13           b'flask/ctx.py'           62       415.0       .py   
+14  b'tests/test_helpers.py'           62       888.0       .py   
+
+    relative_churn  
+1             0.14  
+3             0.17  
+5              NaN  
+7              NaN  
+8             0.71  
+10            0.10  
+11            0.36  
+12            1.33  
+13            0.15  
+14            0.07  
+```
+#### Get descriptive statistics for extension .py and compare to another repository
+
+In this example, flask, this repo and cpython are all compared to see how the median churn is.
+
+```bash
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
+2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
+MEDIAN Statistics:
+
+           churn_count  line_count  relative_churn
+extension                                         
+.py                  2        85.0            0.13
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic median
+2017-10-15 12:40:10,999 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
+MEDIAN Statistics:
+
+           churn_count  line_count  relative_churn
+extension                                         
+.py                  1        62.5            0.02
+
+(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/cpython --ext .py --statistic median
+2017-10-15 12:42:19,260 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/cpython]
+MEDIAN Statistics:
+
+           churn_count  line_count  relative_churn
+extension                                         
+.py                  7       169.5             0.1
+
+```
+
+## FAQ
+
+#### What is Churn and Why Do I Care?
+
+Code churn is the amount of times a file has been modified.  Relative churn is the amount of times it has been modified relative to lines of code.  Research into defects in software has shown that relative code churn is highly predictive of defects, i.e., the greater the relative churn number the higher the amount of defects.
+
+"Increase in relative code churn measures is
+accompanied by an increase in system defect
+density; "
+
+You can read the entire study here:  https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/icse05churn.pdf
 
 
 
