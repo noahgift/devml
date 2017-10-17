@@ -27,6 +27,21 @@ CHURN_GIT_CMD = "git log --name-only --pretty=format:"
 AUTHOR_CHURN_CMD =\
  'git log --follow --no-merges --pretty=format:"Commit Hash: %H, Author: %aN, Date: %aD"'
 
+FILES_DELETED_CMD=\
+    'git log --diff-filter=D --summary | grep delete'
+
+
+def git_deleted_files(path):
+    """Finds deleted files"""
+
+    os.chdir(path) #change directory to process git log
+    del_msg = "Running del cmd: [%s] at path [%s]" % (FILES_DELETED_CMD, path)
+    log.info(del_msg)
+    p = Popen(FILES_DELETED_CMD, shell=True, stdout=PIPE)
+    (git_deleted, _) = p.communicate()
+    #df = pd.DataFrame()
+    return git_deleted
+
 def file_decode(file):
     """decode"""
 
