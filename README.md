@@ -263,6 +263,28 @@ extension
 
 ```
 
+#### Get Relative Churn for an Author
+
+
+
+```bash
+
+python dml.py gstats authorchurnmeta --author "Armin Ronacher" --path /tmp/checkout/flask --ext .py
+
+#He has 6.5% median relative churn...very good.
+
+count    193.000000
+mean       0.331860
+std        0.625431
+min        0.001000
+25%        0.030000
+50%        0.065000
+75%        0.250000
+max        3.000000
+Name: author_rel_churn, dtype: float64
+```
+
+
 ## FAQ
 
 #### What is Churn and Why Do I Care?
