@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-print(incorrect_var)
 import os
 
 import click
