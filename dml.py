@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+
+print(incorrect_var)
 import os
 
 import click
@@ -50,12 +52,12 @@ def init_helper(token,org,dest, branch):
     click.echo("Initializing Project First Time")
     state.create_project_folders(org=org)
     click.echo("Checking out Repo")
-    
+
     #Checkout organization into archive location, i.e. "/mmi/data/projects/pallets/archive"
     if dest == None:
         dest = "/mmi/data/projects/%s/archive/checkout" % org
-    
-    fetch_repo.clone_org_repos(token, org, 
+
+    fetch_repo.clone_org_repos(token, org,
         dest, branch=branch)
 
     #Generate Combined CSV File
@@ -77,7 +79,7 @@ def init_helper(token,org,dest, branch):
     metadata_report_root_path = "/mmi/data/projects/%s/metadata" % org
     metadata_log_msg = "Creating Metadata Report %s" % org_report_root_path
     click.echo(metadata_log_msg)
-    post_processing.write_json_metata_to_disk(path=dest, 
+    post_processing.write_json_metata_to_disk(path=dest,
         json_metadata_report_path=metadata_report_root_path)
 
 @click.group()
@@ -97,8 +99,8 @@ def github():
 @click.option("--branch", default="master", help="Git Branch To Checkout")
 def download(token,org,dest, branch):
     """Downloads Github Repositories"""
-        
-    fetch_repo.clone_org_repos(token, org, 
+
+    fetch_repo.clone_org_repos(token, org,
         dest, branch=branch)
 
 @cli.group()
@@ -182,10 +184,10 @@ def metachurn(path,ext, statistic):
         click.echo("MEDIAN Statistics:\n")
     if statistic == "describe":
         churned = metadata_df.groupby("extension").describe()
-        click.echo("DESCRIPTIVE STATISTICS:\n") 
+        click.echo("DESCRIPTIVE STATISTICS:\n")
     if statistic == "max":
         churned = metadata_df.groupby("extension").max()
-        click.echo("Maximum:\n") 
+        click.echo("Maximum:\n")
     click.echo(churned)
 
 @gstats.command("authorchurnmeta")
@@ -237,7 +239,7 @@ def metadata_stats_report(path):
     """
 
 
-    post_processing.write_json_metata_to_disk(path, 
+    post_processing.write_json_metata_to_disk(path,
         json_metadata_report_path=path)
 
 
