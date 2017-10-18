@@ -217,6 +217,19 @@ def author_churn(path, author, ext):
     click.echo("DESCRIPTIVE STATS FOR AUTHOR CHURN\n")
     click.echo(dfa['author_rel_churn'].describe())
 
+@gstats.command("deleted")
+@click.option("--path", default=CHECKOUT_DIR, help="path to org")
+def activity(path):
+    """Creates File Deletion Stats
+
+    Example is run after checkout:
+    python dml.py gstats deleted --path /Users/noah/src/wulio/checkout
+    """
+
+    deletion_counts = post_processing.git_deleted_files(path)
+    click.echo("DELETION STATISTICS\n")
+    click.echo(deletion_counts)
+
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
 def org_stats_report(path):
