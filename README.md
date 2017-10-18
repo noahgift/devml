@@ -283,7 +283,23 @@ min        0.001000
 max        3.000000
 Name: author_rel_churn, dtype: float64
 ```
+## Deletion Statistics
 
+#### Find all delete files from repository
+
+```bash
+
+DELETION STATISTICS
+
+                                                 files          ext
+0                        b'tests/test_deprecations.py'          .py
+1                       b'scripts/flask-07-upgrade.py'          .py
+2                             b'flask/ext/__init__.py'          .py
+3                                  b'flask/exthook.py'          .py
+4                        b'scripts/flaskext_compat.py'          .py
+5                                 b'tests/test_ext.py'          .py
+
+```
 
 ## FAQ
 
