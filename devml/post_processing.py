@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 from subprocess import (Popen, PIPE)
 from collections import Counter
+import re
 
 import pandas as pd
 from pandas import DataFrame
@@ -30,6 +31,26 @@ AUTHOR_CHURN_CMD =\
 FILES_DELETED_CMD=\
     'git log --diff-filter=D --summary | grep delete'
 
+def files_deleted_match(output):
+    """Retrieves files from output from subprocess
+    
+    i.e: 
+    wcase/templates/hello.html\n delete mode 100644 
+    Throws away everything but path to file
+    """
+
+    files = []
+    integers_match_pattern = '^[-+]?[0-9]+$'
+    for line in output.split():
+        if line == b"delete":
+            continue
+        elif line == b"mode":
+            continue
+        elif re.match(integers_match_pattern, line.decode("utf-8")):
+            continue
+        else:
+            files.append(line)
+    return files
 
 def git_deleted_files(path):
     """Finds deleted files"""
@@ -39,13 +60,15 @@ def git_deleted_files(path):
     log.info(del_msg)
     p = Popen(FILES_DELETED_CMD, shell=True, stdout=PIPE)
     (git_deleted, _) = p.communicate()
-    #df = pd.DataFrame()
-    return git_deleted
+    files = files_deleted_match(git_deleted)
+    df = pd.DataFrame(files, columns=["files"])
+    df["ext"] = df['files'].apply(file_ext)
+    return df
 
-def file_decode(file):
-    """decode"""
+def file_decode(file, decode_type="utf-8"):
+    """decode binary files"""
 
-    file = file.decode("ASCII")
+    file = file.decode(decode_type)
     return file
 
 def git_churn_df(path):
@@ -59,7 +82,6 @@ def git_churn_df(path):
     #Use fancy counter, but convert back to a dict
     churn_count = dict(Counter(git_churn.split()))
     df = pd.DataFrame(list(churn_count.items()),columns=["files", "churn_count"])
-    #df['files'] = df['files'].apply(file_decode)
     return df
 
 def file_len(fname):
