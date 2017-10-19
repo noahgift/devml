@@ -219,7 +219,7 @@ def author_churn(path, author, ext):
 
 @gstats.command("deleted")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
-def activity(path):
+def deleted(path):
     """Creates File Deletion Stats
 
     Example is run after checkout:
