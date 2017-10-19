@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-print(bad_variable)
 import os
 
 import click
