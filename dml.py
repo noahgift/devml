@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+print(wrong_variable)
 import os
 
 import click
