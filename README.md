@@ -23,19 +23,19 @@ Code is written to support Python 3.6 or greater.  You can get that here:  https
 
 #### An easy way to run the project locally is to check the repo out and in the root of the repo run:
 
-```bash
+```
 make setup
 ```
 This create a virtualenv in  ~/.devml
 
 #### Next, source that virtualenv:
 
-```bash
+```
 source ~/.devml/bin/activate
 ```
 
 #### Run Make All (installs, lints and tests)
-```bash
+```
 make all
 
 # #Example output
@@ -63,7 +63,7 @@ TOTAL                        507    295    42%
 
 You don't use virtualenv or don't want to use it.  No problem, just run `make all` it should probably work if you have python 3.6 installed.
 
-```bash
+```
 
 make all
 ```
@@ -102,7 +102,7 @@ They stand for the following:
 * checkout_dir:  place to checkout 
 * oath:  personal oath token generated from Github
 
-```bash
+```
 ➜  devml git:(master) ✗ cat project/config.json 
 {
     "project" : 
@@ -131,7 +131,7 @@ Top Commits By Author:                     author_name  commits
 
 ## Basic API Usage (Converting a tree of repo(s) into a pandas DataFrame)
 
-```python
+```
 In [1]: from devml import (mkdata, stats)
 
 In [2]: org_df = mkdata.create_org_df(path=/src/mycompanyrepo(s)")
@@ -150,7 +150,7 @@ Out[4]:
 
 ## Clone all repos in Github using API
 
-```ipython
+```
 In [1]: from devml import (mkdata, stats, state, fetch_repo)
 
 In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
@@ -182,7 +182,7 @@ drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 
 ## Advanced CLI-Author:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
-```base
+```
  ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
 
 Top Unique Active Days:               author_name  active_days active_duration  active_ratio
@@ -214,7 +214,7 @@ Top Unique Active Days:               author_name  active_days active_duration  
 
 #### Get the top ten files sorted by churn count with the extension .py: 
 
-```bash
+```
 ✗ python dml.py gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
 2017-10-15 12:10:55,783 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
                        files  churn_count  line_count extension  \
@@ -245,7 +245,7 @@ Top Unique Active Days:               author_name  active_days active_duration  
 
 In this example, flask, this repo and cpython are all compared to see how the median churn is.
 
-```bash
+```
 (.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
 2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
 MEDIAN Statistics:
@@ -275,7 +275,7 @@ extension
 
 
 
-```bash
+```
 
 python dml.py gstats authorchurnmeta --author "Armin Ronacher" --path /tmp/checkout/flask --ext .py
 
@@ -295,7 +295,7 @@ Name: author_rel_churn, dtype: float64
 
 #### Find all delete files from repository
 
-```bash
+```
 
 DELETION STATISTICS
 
