@@ -1,10 +1,11 @@
 import click
 from click.testing import CliRunner
-
-from dml import cli
+import imp
 from devml import __version__
+
+dml = imp.load_source("dml", "dml")
 
 def test_cli():
     runner = CliRunner()
-    result = runner.invoke(cli, ['--version'])
+    result = runner.invoke(dml.cli, ['--version'])
     assert __version__ in result.output
