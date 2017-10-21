@@ -1,10 +1,14 @@
 import sys
 if sys.version_info < (3,6):
     sys.exit('Sorry, Python < 3.6 is not supported')
+import os
 
 from setuptools import setup
 
 from devml import __version__
+
+if os.path.exists('README.rst'):
+    LONG = open('README.rst').read()
 
 setup(
     name='devml',
@@ -15,15 +19,7 @@ setup(
     author_email='consulting@noahgift.com',
     description="""Machine Learning, Statistics and Utilities around Developer Productivity, 
         Company Productivity and Project Productivity""",
-    long_description="""
-    Machine Learning, Statistics and Utilities around Developer Productivity
-
-    A few handy bits of functionality:
-
-    Can checkout all repositories in Github
-    Converts a tree of checked out repositories on disk into a pandas dataframe
-    Statistics on combined DataFrames
-    """,
+    long_description=LONG,
     packages=['devml'],
     include_package_data=True,
     zip_safe=False,
@@ -45,8 +41,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    entry_points='''
-        [console_scripts]
-        dml=dml:cli
-    '''
+    scripts=["dml"],
 )
