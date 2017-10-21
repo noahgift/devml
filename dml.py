@@ -218,16 +218,25 @@ def author_churn(path, author, ext):
 
 @gstats.command("deleted")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")
-def deleted(path):
+@click.option("--describe/--no-describe", default=False, help="create descriptive statistics")
+def deleted(path, describe):
     """Creates File Deletion Stats
 
     Example is run after checkout:
     python dml.py gstats deleted --path /Users/noah/src/wulio/checkout
+    
+    python dml.py gstats deleted --path /Users/noahgift/src/flask --describe True
+
     """
 
     deletion_counts = post_processing.git_deleted_files(path)
-    click.echo("DELETION STATISTICS\n")
-    click.echo(deletion_counts)
+    if describe:
+        deletion_counts_described = deletion_counts.groupby("ext").describe()
+        click.echo("DESCRIPTIVE STATISTICS:\n")
+        click.echo(deletion_counts_described)
+    else: 
+        click.echo("DELETION STATISTICS\n")
+        click.echo(deletion_counts)
 
 @gstats.command("org")
 @click.option("--path", default=CHECKOUT_DIR, help="path to org")

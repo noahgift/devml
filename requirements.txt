@@ -11,3 +11,4 @@ seaborn
 matplotlib
 PyGithub
 gitpython
+sqlalchemy
