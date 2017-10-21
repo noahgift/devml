@@ -9,7 +9,7 @@ from devml import __version__
 setup(
     name='devml',
     version=__version__,
-    url='https://github.com/pallets/flask/',
+    url='https://github.com/noahgift/devml',
     license='MIT',
     author='Noah Gift',
     author_email='consulting@noahgift.com',
