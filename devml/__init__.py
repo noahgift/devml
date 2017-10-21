@@ -8,4 +8,4 @@ org_df = mkdata.create_org_df(path)
 author_counts = stats.author_commit_count(org_df)
 
 """
-__version__ = "0.1"
+__version__ = "0.2"
