@@ -5,15 +5,10 @@ import json
 
 import pandas as pd
 
-from .util import zipped_csv_to_df
-
 from sensible.loginit import logger
 log = logger(__name__)
 
-#use default Dataframe if one isn't passed in
-DF=zipped_csv_to_df()
-
-def org_commits_by_day(df_raw=DF):
+def org_commits_by_day(df_raw):
     """Returns all commits with a count and a date index by day"""
 
     odf_day = df_raw.resample('D').sum()
@@ -109,7 +104,7 @@ def org_descriptive_stats_commits(odf_day):
     stats['median_per_day'] = float(active_days.median())
     return stats
 
-def make_org_report(df_raw=DF):
+def make_org_report(df_raw):
     """Create Report for organization"""
     
     odf_day = org_commits_by_day(df_raw)    
@@ -126,7 +121,7 @@ def make_org_report(df_raw=DF):
     log.info(make_report_msg)
     return report
 
-def make_org_report_json(df_raw=DF):
+def make_org_report_json(df_raw):
     """Create Report For Organization output as JSON"""
 
     report = make_org_report(df_raw)
