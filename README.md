@@ -10,6 +10,12 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
+## Installation
+
+```pip install devml
+```
+
+
 ## Get environment setup
 
 Code is written to support Python 3.6 or greater.  You can get that here:  https://www.python.org/downloads/release/python-360/.
