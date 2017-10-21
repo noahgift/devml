@@ -12,7 +12,8 @@ A few handy bits of functionality:
 
 ## Installation
 
-```pip install devml
+```
+pip install devml
 ```
 
 
