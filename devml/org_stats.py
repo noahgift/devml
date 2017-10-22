@@ -1,5 +1,6 @@
 """
-Organizational Stats, more information here:  https://github.com/noahgift/meta_machine_intelligence/blob/master/docs/stats.md
+Organizational Stats, more information here:
+  https://github.com/noahgift/meta_machine_intelligence/blob/master/docs/stats.md
 """
 import json
 

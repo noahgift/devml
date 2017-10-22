@@ -2,8 +2,6 @@
 
 #TO DO LIST:
 
-* Generate median relative churn per author per file
-* Generate Descriptive Statistics
 http://stackoverflow.com/questions/26489134/whats-the-inverse-of-the-quantile-function-on-a-pandas-series
 * Look into T-Score as ranking or Z-Score
 * Create large columnar structure something like:

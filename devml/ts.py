@@ -19,6 +19,13 @@ def date_index(df):
     df['2014']
 
     'in May 2016'
+    
+    fill in zeros for dates with NaaN:
+    
+    http://stackoverflow.com/questions/13295735/
+        how-can-i-replace-all-the-nan-values-with-zeros-in-a-column-of-a-pandas-datafra
+    
+    df.fillna(0)
 
     """
 
@@ -26,9 +33,6 @@ def date_index(df):
     del df['date']
     #adds commits so numerical methods will work on timeseries
     df['commits']=1
-    #fill in zeros for dates with NaaN
-    #http://stackoverflow.com/questions/13295735/how-can-i-replace-all-the-nan-values-with-zeros-in-a-column-of-a-pandas-datafra
-    df.fillna(0)
     return df
 
 def date_range(df):
