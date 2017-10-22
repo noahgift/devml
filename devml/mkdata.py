@@ -42,7 +42,12 @@ def log_to_dict(path):
     repo_name = generate_repo_name()
     p = Popen(GIT_LOG_CMD, shell=True, stdout=PIPE)
     (git_log, _) = p.communicate()
-    git_log = git_log.decode('utf8').strip('\n\x1e').split("\x1e")
+    try:
+        git_log = git_log.decode('utf8').strip('\n\x1e').split("\x1e")
+    except UnicodeDecodeError:
+        log.exception("utf8 encoding is incorrect, trying ISO-8859-1")
+        git_log = git_log.decode('ISO-8859-1').strip('\n\x1e').split("\x1e")
+        
     git_log = [row.strip().split("\x1f") for row in git_log]
     git_log = [dict(list(zip(GIT_COMMIT_FIELDS, row))) for row in git_log]
     for dictionary in git_log:
