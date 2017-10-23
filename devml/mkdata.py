@@ -127,6 +127,8 @@ def get_git_uid():
 
     https://stackoverflow.com/questions/34874343/
         how-can-i-uniquely-identify-a-git-repository
+
+    This isn't great, used git remote instead
     """
     
     
@@ -144,7 +146,7 @@ def create_org_logs(path):
         repo_msg = "Processing Repo: %s" % sdir
         log.info(repo_msg)
         git_log, guid2 = log_to_dict(sdir, guid)
-        #Only set guid if it ins't False
+        #Only set guid if it isn't False
         if guid2:
             guid = guid2 
         if not git_log:
