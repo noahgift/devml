@@ -16,6 +16,9 @@ deploy-pypi:
 	twine upload dist/*
 	rm -f README.rst
 
+profile:
+	python -m cProfile -s cumtime ./dml gstats activity --path /Users/noahgift/src/cpython --sort active_days
+
 lint:
 	pylint --disable=R,C devml dml
 
