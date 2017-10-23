@@ -14,6 +14,7 @@ GIT_COMMIT_FIELDS = ['id', 'author_name', 'author_email', 'date', 'message']
 GIT_LOG_FORMAT = ['%H', '%an', '%ae', '%ad', '%s']
 GIT_LOG_FORMAT = '%x1f'.join(GIT_LOG_FORMAT) + '%x1e'
 GIT_LOG_CMD = 'git log --no-merges --date=local --format="%s"' % GIT_LOG_FORMAT
+GIT_UNIQUE_CMD = "git remote -v"
 GIT_REPO_NAME =  """basename `git rev-parse --show-toplevel`"""
 GIT_CSV_COLUMN_NAMES = ["date","author_email", "author_name",  
                                         "id", "message", "repo"]
@@ -35,9 +36,19 @@ def generate_repo_name():
     log.info(log_msg)
     return repo_name
 
-def log_to_dict(path):
+def log_to_dict(path, repo_id=None):
     """Converts Git Log To A Python Dict"""
     
+    #don't process the same repo twice
+    guid = get_git_uid()
+    if guid == repo_id:
+        guid_true_msg = "guid: %s | repo_id: %s are equal:  SKIP" % (guid, repo_id)
+        log.info(guid_true_msg)
+        return False, False
+    else:
+        not_true_msg = "guid: %s" % guid
+        log.info(not_true_msg)
+
     os.chdir(path) #change directory to process git log
     repo_name = generate_repo_name()
     p = Popen(GIT_LOG_CMD, shell=True, stdout=PIPE)
@@ -54,7 +65,7 @@ def log_to_dict(path):
         dictionary["repo"]=repo_name
     repo_msg = "Found %s Messages For Repo: %s" % (len(git_log), repo_name)
     log.info(repo_msg)
-    return git_log
+    return git_log, guid
 
 def log_df(path):
     """Returns a Pandas DataFrame of git log history"""
@@ -110,15 +121,38 @@ def create_org_df(path):
     os.chdir(original_cwd)
     return converted_df
 
+def get_git_uid():
+    """
+    Uniquely identify git repo:
+
+    https://stackoverflow.com/questions/34874343/
+        how-can-i-uniquely-identify-a-git-repository
+    """
+    
+    
+    p = Popen(GIT_UNIQUE_CMD, shell=True, stdout=PIPE)
+    (guid, _) = p.communicate()
+    return guid
+
 def create_org_logs(path):
     """Iterate through all paths in current working directory,
     make log dict"""
 
     combined_log = []
+    guid = False
     for sdir in subdirs(path):
         repo_msg = "Processing Repo: %s" % sdir
         log.info(repo_msg)
-        combined_log += log_to_dict(sdir)
+        git_log, guid2 = log_to_dict(sdir, guid)
+        #Only set guid if it ins't False
+        if guid2:
+            guid = guid2 
+        if not git_log:
+            msg = "repo already processed: git_log value == [%s]" % git_log
+            log.info(msg)
+            continue
+        else:
+            combined_log += git_log
     log_entry_msg = "Found a total log entries: %s" % len(combined_log)
     log.info(log_entry_msg)
     return combined_log
