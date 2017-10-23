@@ -16,6 +16,7 @@ A few handy bits of functionality:
 pip install devml
 ```
 
+This pip install installs a command-line tool:  dml (which is referenced in the documentation below). And also library devml, which is referenced below as well.
 
 ## Get environment setup
 
@@ -121,7 +122,7 @@ You can find out stats for a checkout or a directory full of checkout as follows
 
 ```bash
 
-python dml.py gstats author --path ~/src/mycompanyrepo(s)
+dml gstats author --path ~/src/mycompanyrepo(s)
 Top Commits By Author:                     author_name  commits
 0                     John Smith     3059
 1                      Sally Joe     2995
@@ -183,7 +184,7 @@ drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ## Advanced CLI-Author:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
 ```
- ➜  devml git:(master) ✗ python dml.py gstats activity --path /tmp/checkout --sort active_days 
+ ➜  devml git:(master) ✗ dml gstats activity --path /tmp/checkout --sort active_days 
 
 Top Unique Active Days:               author_name  active_days active_duration  active_ratio
 86         Armin Ronacher          989       3817 days      0.260000
@@ -215,7 +216,7 @@ Top Unique Active Days:               author_name  active_days active_duration  
 #### Get the top ten files sorted by churn count with the extension .py: 
 
 ```
-✗ python dml.py gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
+✗ dml gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
 2017-10-15 12:10:55,783 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
                        files  churn_count  line_count extension  \
 1            b'flask/app.py'          316      2183.0       .py   
@@ -246,14 +247,14 @@ Top Unique Active Days:               author_name  active_days active_duration  
 In this example, flask, this repo and cpython are all compared to see how the median churn is.
 
 ```
-(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
+(.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
 2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
 MEDIAN Statistics:
 
            churn_count  line_count  relative_churn
 extension                                         
 .py                  2        85.0            0.13
-(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic median
+(.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic median
 2017-10-15 12:40:10,999 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
 MEDIAN Statistics:
 
@@ -261,7 +262,7 @@ MEDIAN Statistics:
 extension                                         
 .py                  1        62.5            0.02
 
-(.devml) ➜  devml git:(master) python dml.py gstats metachurn --path /Users/noahgift/src/cpython --ext .py --statistic median
+(.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/cpython --ext .py --statistic median
 2017-10-15 12:42:19,260 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/cpython]
 MEDIAN Statistics:
 
@@ -277,7 +278,7 @@ extension
 
 ```
 
-python dml.py gstats authorchurnmeta --author "Armin Ronacher" --path /tmp/checkout/flask --ext .py
+dml gstats authorchurnmeta --author "Armin Ronacher" --path /tmp/checkout/flask --ext .py
 
 #He has 6.5% median relative churn...very good.
 
@@ -291,11 +292,58 @@ min        0.001000
 max        3.000000
 Name: author_rel_churn, dtype: float64
 ```
+
+#### Compare CPython Active Ratio with Linux Active Ratio
+
+```
+# Linux Development Active Ratio
+dml gstats activity --path /Users/noahgift/src/linux --sort active_days
+
+                       author_name  active_days active_duration  active_ratio
+14541                 Takashi Iwai         1677       4590 days      0.370000
+4382                  Eric Dumazet         1460       4504 days      0.320000
+3641               David S. Miller         1428       4513 days      0.320000
+7216                 Johannes Berg         1329       4328 days      0.310000
+8717                Linus Torvalds         1281       4565 days      0.280000
+275                        Al Viro         1249       4562 days      0.270000
+9915         Mauro Carvalho Chehab         1227       4464 days      0.270000
+9375                    Mark Brown         1198       4187 days      0.290000
+3172                 Dan Carpenter         1158       3972 days      0.290000
+12979                 Russell King         1141       4602 days      0.250000
+1683                      Axel Lin         1040       2720 days      0.380000
+400                   Alex Deucher         1036       3497 days      0.300000
+
+
+# CPython Development Active Ratio
+
+            author_name  active_days active_duration  active_ratio
+146    Guido van Rossum         2256       9673 days      0.230000
+301   Raymond Hettinger         1361       5635 days      0.240000
+128          Fred Drake         1239       5335 days      0.230000
+47    Benjamin Peterson         1234       3494 days      0.350000
+132        Georg Brandl         1080       4091 days      0.260000
+375      Victor Stinner          980       2818 days      0.350000
+235     Martin v. Löwis          958       5266 days      0.180000
+36       Antoine Pitrou          883       3376 days      0.260000
+362          Tim Peters          869       5060 days      0.170000
+164         Jack Jansen          800       4998 days      0.160000
+24   Andrew M. Kuchling          743       4632 days      0.160000
+330    Serhiy Storchaka          720       1759 days      0.410000
+44         Barry Warsaw          696       8485 days      0.080000
+52         Brett Cannon          681       5278 days      0.130000
+262        Neal Norwitz          559       2573 days      0.220000
+
+In this analysis, Guido of Python has a 23% probability of working on a given day, and Linux has a 28% chance.
+
+```
+
+
 ## Deletion Statistics
 
 #### Find all delete files from repository
 
 ```
+dml gstats deleted --path /Users/noahgift/src/flask
 
 DELETION STATISTICS
 
