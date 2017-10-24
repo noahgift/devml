@@ -117,8 +117,12 @@ def retrieve_churn_by_authors(fname):
     cnt = Counter()
     for line in git_log:
         if "Author" in line:
-            _,name = line.split(":")
-            name = name.strip()
+            try:
+                _,name = line.split(":")
+                name = name.strip()
+            except ValueError:
+                log.exception(line)
+                continue
             cnt[name] += 1 
     return dict(cnt)
 
