@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import os
-
 import click
-
+print(badvar)
 from devml import state
 from devml import fetch_repo
 from devml import __version__
@@ -224,7 +223,7 @@ def deleted(path, describe):
 
     Example is run after checkout:
     python dml.py gstats deleted --path /Users/noah/src/wulio/checkout
-    
+
     python dml.py gstats deleted --path /Users/noahgift/src/flask --describe True
 
     """
@@ -234,7 +233,7 @@ def deleted(path, describe):
         deletion_counts_described = deletion_counts.groupby("ext").describe()
         click.echo("DESCRIPTIVE STATISTICS:\n")
         click.echo(deletion_counts_described)
-    else: 
+    else:
         click.echo("DELETION STATISTICS\n")
         click.echo(deletion_counts)
 
