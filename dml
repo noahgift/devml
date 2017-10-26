@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import click
-print(badvar)
 from devml import state
 from devml import fetch_repo
 from devml import __version__
