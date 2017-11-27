@@ -9,6 +9,8 @@ from devml import stats
 from devml import org_stats
 from devml import post_processing
 
+this_variable_is_wrong
+
 #Creates Defaults From JSON Config
 try:
     CHECKOUT_DIR, OATH_TOKEN, ORG = state.get_project_metadata()
