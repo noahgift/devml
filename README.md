@@ -11,8 +11,9 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
-Article about project on IBM Developerworks Part 1:  https://www.ibm.com/developerworks/library/ba-github-analytics-1/index.html
-Article about project on IBM Developerworks Part 2:  https://www.ibm.com/developerworks/opensource/library/ba-github-analytics-2/index.html
+* Article about project on IBM Developerworks Part 1:  https://www.ibm.com/developerworks/library/ba-github-analytics-1/index.html
+
+* Article about project on IBM Developerworks Part 2:  https://www.ibm.com/developerworks/opensource/library/ba-github-analytics-2/index.html
 
 ## Installation
 
