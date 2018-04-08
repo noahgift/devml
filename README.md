@@ -11,7 +11,11 @@ A few handy bits of functionality:
 * Converts a tree of checked out repositories on disk into a pandas dataframe
 * Statistics on combined DataFrames
 
-## Related Articles
+## Pragmatic AI Book
+
+This material is covered in [Chapter 8 of Pragmatic AI Book](https://www.amazon.com/Pragmatic-AI-Introduction-Cloud-based-Learning/dp/0134863860)
+
+## Related IBM Developerworks Articles
 * Article about project on IBM Developerworks Part 1:  https://www.ibm.com/developerworks/library/ba-github-analytics-1/index.html
 
 * Article about project on IBM Developerworks Part 2:  https://www.ibm.com/developerworks/opensource/library/ba-github-analytics-2/index.html
