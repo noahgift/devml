@@ -76,7 +76,7 @@ def init_helper(token,org,dest, branch):
     metadata_report_root_path = "/mmi/data/projects/%s/metadata" % org
     metadata_log_msg = "Creating Metadata Report %s" % org_report_root_path
     click.echo(metadata_log_msg)
-    post_processing.write_json_metata_to_disk(path=dest,
+    post_processing.write_json_metadata_to_disk(path=dest,
         json_metadata_report_path=metadata_report_root_path)
 
 @click.group()
@@ -155,7 +155,7 @@ def churn(path, limit, ext):
     """
 
     df = post_processing.git_churn_df(path=path)
-    metadata_df = post_processing.git_populate_file_metatdata(df)
+    metadata_df = post_processing.git_populate_file_metadata(df)
     if ext:
         metadata_df = metadata_df[metadata_df.extension == ".py"]
     churned = metadata_df.sort_values(by="churn_count", ascending=False).head(limit)
@@ -173,7 +173,7 @@ def metachurn(path,ext, statistic):
     """
 
     df = post_processing.git_churn_df(path=path)
-    metadata_df = post_processing.git_populate_file_metatdata(df)
+    metadata_df = post_processing.git_populate_file_metadata(df)
     if ext:
         metadata_df = metadata_df[metadata_df.extension == ".py"]
     if statistic == "median":
@@ -199,7 +199,7 @@ def author_churn(path, author, ext):
     """
 
     df = post_processing.git_churn_df(path=path)
-    metadata_df = post_processing.git_populate_file_metatdata(df)
+    metadata_df = post_processing.git_populate_file_metadata(df)
     if ext:
         metadata_df = metadata_df[metadata_df.extension == ".py"]
     authors = post_processing.author_churn_df(df)
@@ -258,7 +258,7 @@ def metadata_stats_report(path):
     """
 
 
-    post_processing.write_json_metata_to_disk(path,
+    post_processing.write_json_metadata_to_disk(path,
         json_metadata_report_path=path)
 
 

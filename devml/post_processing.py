@@ -131,7 +131,7 @@ def author_churn_df(df):
 
     files = []
     data = []
-    df_metadata = git_populate_file_metatdata(df)
+    df_metadata = git_populate_file_metadata(df)
     for file in df_metadata['files']:
         files.append(file.decode("ASCII"))
         data.append(retrieve_churn_by_authors(file))
@@ -139,7 +139,7 @@ def author_churn_df(df):
         df['files'] = files
     return df
 
-def git_populate_file_metatdata(df):
+def git_populate_file_metadata(df):
     """For all of the files found in git metadata, generate data about them"""
 
     df['line_count'] = df['files'].apply(file_len)
@@ -150,14 +150,14 @@ def git_populate_file_metatdata(df):
     df_sorted.index = list(range(1,len(df_sorted) + 1))
     return df_sorted
 
-def write_json_metata_to_disk(path, json_metadata_report_path):
+def write_json_metadata_to_disk(path, json_metadata_report_path):
     """Writes metadata to disk"""
 
     for sdir in subdirs(path):
         repo_msg = "Processing Repo: %s" % sdir
         log.info(repo_msg)
         df = git_churn_df(sdir)
-        df_metadata = git_populate_file_metatdata(df)
+        df_metadata = git_populate_file_metadata(df)
         json_report = df_metadata.to_json()
         repo_name = sdir.split("/")[-1]
         json_path = "%s/%s_metadata.json" % (json_metadata_report_path, repo_name)
