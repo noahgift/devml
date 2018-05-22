@@ -19,6 +19,11 @@ A few handy bits of functionality:
 
 This material is covered in [Chapter 8 of Pragmatic AI Book](https://www.amazon.com/Pragmatic-AI-Introduction-Cloud-based-Learning/dp/0134863860)
 
+## Related News about Workplace Analytics
+
+This project is in the field of workplace analytics and is talked about in the Harvard Business Review.
+(People and Workplace Analytics)[https://hbr.org/2018/05/how-people-analytics-can-help-you-change-process-culture-and-strateg]
+
 ## Related IBM Developerworks Articles
 * Article about project on IBM Developerworks Part 1:  https://www.ibm.com/developerworks/library/ba-github-analytics-1/index.html
 
