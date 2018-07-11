@@ -9,7 +9,7 @@ This is an open source project sponsored by [Pragmatic AI Labs](http://paiml.com
 ## Pragmatic AI Labs
 ![alt text](https://paiml.com/images/logo_with_slogan_white_background.png)
 
-This notebook was produced by [Pragmatic AI Labs](https://paiml.com/).  You can continue learning about these topics by:
+You can continue learning about these topics by:
 
 *   Buying a copy of [Pragmatic AI: An Introduction to Cloud-Based Machine Learning](http://www.informit.com/store/pragmatic-ai-an-introduction-to-cloud-based-machine-9780134863917)
 *   Viewing more content at [noahgift.com](https://noahgift.com/)
