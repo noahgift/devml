@@ -6,23 +6,24 @@ Machine Learning, Statistics and Utilities around Developer Productivity
 
 This is an open source project sponsored by [Pragmatic AI Labs](http://paiml.com)
 
+Key functions:
+* Can checkout all repositories in Github
+* Converts a tree of checked out repositories on disk into a pandas dataframe
+* Statistics on combined DataFrames
+
+
 ## Pragmatic AI Labs
 ![alt text](https://paiml.com/images/logo_with_slogan_white_background.png)
 
 You can continue learning about these topics by:
 
-*   Buying a copy of [Pragmatic AI: An Introduction to Cloud-Based Machine Learning](http://www.informit.com/store/pragmatic-ai-an-introduction-to-cloud-based-machine-9780134863917)
+*   Buying a copy of [Pragmatic AI: An Introduction to Cloud-Based Machine Learning](https://amzn.to/2LFLVEg)
 *   Viewing more content at [noahgift.com](https://noahgift.com/)
-*   Hear more about the some of the topics covered in [TWIML podcast](https://twimlai.com/twiml-talk-158-growth-hacking-sports-w-machine-learning-with-noah-gift/)
-A few handy bits of functionality:
-
-* Can checkout all repositories in Github
-* Converts a tree of checked out repositories on disk into a pandas dataframe
-* Statistics on combined DataFrames
+*   Viewing more content at [Pragmatic AI Labs](https://paiml.com/)
 
 ## Pragmatic AI Book
 
-This material is covered in [Chapter 8 of Pragmatic AI Book](https://www.amazon.com/Pragmatic-AI-Introduction-Cloud-based-Learning/dp/0134863860)
+This material is covered in [Chapter 8 of Pragmatic AI Book](https://amzn.to/2LFLVEg)
 
 ## Related News about Workplace Analytics
 
