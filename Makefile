@@ -20,6 +20,6 @@ profile:
 	python -m cProfile -s cumtime ./dml gstats activity --path /Users/noahgift/src/cpython --sort active_days
 
 lint:
-	pylint --disable=R,C devml dml
+	pylint --disable=R,C,W1203 devml dml
 
 all: install lint test
