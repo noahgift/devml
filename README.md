@@ -4,7 +4,7 @@
 # devml
 Machine Learning, Statistics and Utilities around Developer Productivity
 
-This is an open source project sponsored by [Pragmatic AI Labs](http://paiml.com)
+This is an open source project sponsored by [Pragmatic AI Labs](http://paiml.com).
 
 Key functions:
 * Can checkout all repositories in Github
