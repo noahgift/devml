@@ -1,6 +1,7 @@
 from subprocess import (Popen, PIPE)
 import os
 import csv
+import json
 
 from .ts import (convert_datetime, date_index)
 
@@ -120,6 +121,47 @@ def create_org_df(path):
     log.info(cd_msg)
     os.chdir(original_cwd)
     return converted_df
+
+def create_projectarea_df(ccmServer, projectArea, userId, password):
+    """Returns a Pandas DataFrome of change sets delivered to components in a project area"""
+    # Get all the users managed by this server, we need this to get the author_email
+    columns = ['date', 'id', 'author_name', 'author_email', 'message', 'repo', 'commits']
+    # login to EWM CCM
+    p = Popen(f'lscm login -r {ccmServer} -u {userId} -P {password}', shell=True, stdout=PIPE)
+    resp = p.stdout.read().decode('utf-8')
+    if not resp.startswith('Logged in'):
+        log.error(f'Cannot login to {ccmServer}')
+        return None
+    df = pd.DataFrame(columns=columns)
+    p = Popen(f'lscm list users  -r {ccmServer} -j', shell=True, stdout=PIPE)
+    ewmUsers = json.load(p.stdout)
+    users = {user['name']: user['mail'] for user in ewmUsers}
+    # get the components in the project area
+    p = Popen(f'lscm list components  -r {ccmServer} -j', shell=True, stdout=PIPE)
+    components = json.load(p.stdout)
+    components = pd.DataFrame.from_dict(components['components']) if components != None else None
+    if components is None or len(components) == 0:
+        log.info(f'Could not get components in project area: "{projectArea}"')
+        return df
+    for component in components.name:
+        # get all the completed change sets delivered to this component
+        p = Popen(f'lscm list changesets  -r {ccmServer} -C "{component}" -j', shell=True, stdout=PIPE)
+        changes = None
+        try:
+            changes = json.load(p.stdout)
+            changes = changes['changes'] if changes != None else None
+        except:
+            continue
+        changesDicts = [dict(list(zip(columns, [change['modified'],change['uuid'],change['author'],None,change['comment'],component,None]))) for change in changes]
+        df = pd.concat([df, pd.DataFrame.from_dict(changesDicts)])
+    df['date'] = pd.to_datetime(df['date'])
+    pd.DataFrame.set_index(df, keys='date', drop=True, inplace=True)
+    df['author_email'] = df['author_name'].apply(lambda author_name: users[author_name] if author_name in users else None)
+    df['commits']=1
+    p = Popen(f'lscm logout -r {ccmServer}', shell=True, stdout=PIPE)
+    return df
+
+
 
 def get_git_uid():
     """
