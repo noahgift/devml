@@ -53,7 +53,7 @@ Code is written to support Python 3.6 or greater.  You can get that here:  https
 make setup
 ```
 This create a virtualenv in  ~/.devml
-
+```
 #### Next, source that virtualenv:
 
 ```
@@ -140,6 +140,7 @@ They stand for the following:
     
 }
 ```
+Note: The jupyter notebooks use git@github.com to access GitHub repos. This is using SSH as the protocol, and is expecting an SSH key to be created, and added to your GitHub repo. See [Generating an SSH Key](https://help.github.com/en/articles/generating-an-ssh-key) for instructions.
 
 ## Basic command-line Usage
 
@@ -160,7 +161,7 @@ Top Commits By Author:                     author_name  commits
 ```
 In [1]: from devml import (mkdata, stats)
 
-In [2]: org_df = mkdata.create_org_df(path=/src/mycompanyrepo(s)")
+In [2]: org_df = mkdata.create_org_df(path="/src/mycompanyrepo(s)")
 In [3]: author_counts = stats.author_commit_count(org_df)
 
 In [4]: author_counts.head()
@@ -174,6 +175,24 @@ Out[4]:
 
 ```
 
+To analyze information in an IBM Engineering Workflow Manager (formerly Rational Team Concert or RTC) project area, use for example:
+
+```
+In [1]: from devml import (mkdata, stats)
+
+In [2]: projectarea_df = mkdata.create_projectarea_df(ccmServer="https://server:9443/ccm", projectArea="Your Project Area", userId="yourId", password="yourPassword")
+In [3]: author_counts = stats.author_commit_count(projectarea_df)
+
+In [4]: author_counts.head()
+Out[4]: 
+                   author_name  commits
+0                Carol Newbold       35
+1  Jose de Jesus Herrera Ledon       11
+2               ATTAULLAH SYED        4
+3                 Patricia Der        2
+4                 Eric Solomon        1
+
+```
 ## Clone all repos in Github using API
 
 ```
