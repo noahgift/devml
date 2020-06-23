@@ -61,7 +61,7 @@ source ~/.devml/bin/activate
 ```
 
 #### Run Make All (installs, lints and tests)
-````
+```Shell
 make all
 
 # #Example output
@@ -85,7 +85,7 @@ dml.py                       111     66    41%
 ----------------------------------------------
 TOTAL                        507    295    42%
 ...
-````
+```
 
 You don't use virtualenv or don't want to use it.  No problem, just run `make all` it should probably work if you have python 3.6 installed.
 
