@@ -53,7 +53,7 @@ Code is written to support Python 3.6 or greater.  You can get that here:  https
 make setup
 ```
 This create a virtualenv in  ~/.devml
-```
+
 #### Next, source that virtualenv:
 
 ```
@@ -61,7 +61,7 @@ source ~/.devml/bin/activate
 ```
 
 #### Run Make All (installs, lints and tests)
-```Shell
+```
 make all
 
 # #Example output
