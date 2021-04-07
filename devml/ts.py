@@ -4,8 +4,10 @@ import pandas as pd
 
 def convert_datetime(df):
     """Converts Git Timestamps to Pandas Datetime"""
-
-    df['date'] = pd.to_datetime(df['date'],format="%a %b %d %X %Y")
+    try:
+        df['date'] = pd.to_datetime(df['date'],format="%a %b %d %X %Y")
+    except (ValueError, TypeError): # try again with UTC
+        df['date'] = pd.to_datetime(df['date'], infer_datetime_format=True)
     return df
 
 def date_index(df):
