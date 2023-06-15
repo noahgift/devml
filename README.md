@@ -47,14 +47,20 @@ This pip install installs a command-line tool:  dml (which is referenced in the 
 
 Code is written to support Python 3.6 or greater.  You can get that here:  https://www.python.org/downloads/release/python-360/.
 
-#### An easy way to run the project locally is to check the repo out and in the root of the repo run:
+An easy way to run the project locally is to check the repo out and in the root of the repo run:
 
 ```
 make setup
 ```
-This create a virtualenv in  ~/.devml
 
-#### Next, source that virtualenv:
+
+Then create a virtualenv in  ~/.devml:
+
+```
+$ python3 -m venv ~/.devml
+```
+
+### Next, source that virtualenv:
 
 ```
 source ~/.devml/bin/activate
@@ -65,7 +71,7 @@ source ~/.devml/bin/activate
 make all
 
 # #Example output
-#(.devml) ➜  devml git:(master) make all                    
+#(.devml) ➜  devml git:(master) make all
 #pip install -r requirements.txt
 #Requirement already satisfied: pytest in /Users/noahgift/.devml/lib/python3.6/site-packages (from -r requirements.txt (line #1)
 ---------- coverage: platform darwin, python 3.6.2-final-0 -----------
@@ -87,13 +93,11 @@ TOTAL                        507    295    42%
 ...
 ```
 
-You don't use virtualenv or don't want to use it.  No problem, just run `make all` it should probably work if you have python 3.6 installed.
+If you don't use virtualenv or don't want to use it, no problem, just run `make all` it should probably work if you have python 3.6 installed:
 
 ```
-
 make all
 ```
-
 
 ## Explore Jupyter Notebooks on Github Organizations
 
@@ -105,7 +109,7 @@ https://github.com/noahgift/devml/blob/master/notebooks/github_data_exploration.
 
 ## Explore Jupyter Notebooks on Repository Churn
 
-You can explore File Metadata exploration example here: 
+You can explore File Metadata exploration example here:
 
 https://github.com/noahgift/devml/blob/master/notebooks/repo_file_exploration.ipynb
 
@@ -125,28 +129,29 @@ Alternately, you can pass these values in via the python API or via the command-
 They stand for the following:
 
 * org:  Github Organization (To clone entire tree of repos)
-* checkout_dir:  place to checkout 
+* checkout_dir:  place to checkout
 * oath:  personal oath token generated from Github
 
 ```
-➜  devml git:(master) ✗ cat project/config.json 
+➜  devml git:(master) ✗ cat project/config.json
 {
-    "project" : 
+    "project" :
         {
             "org":"pallets",
             "checkout_dir": "/tmp/checkout",
             "oath": "<keygenerated from Github>"
         }
-    
+
 }
 ```
+
 Note: The jupyter notebooks use git@github.com to access GitHub repos. This is using SSH as the protocol, and is expecting an SSH key to be created, and added to your GitHub repo. See [Generating an SSH Key](https://help.github.com/en/articles/generating-an-ssh-key) for instructions.
 
 ## Basic command-line Usage
 
 You can find out stats for a checkout or a directory full of checkout as follows
 
-```bash
+```text
 
 dml gstats author --path ~/src/mycompanyrepo(s)
 Top Commits By Author:                     author_name  commits
@@ -165,7 +170,7 @@ In [2]: org_df = mkdata.create_org_df(path="/src/mycompanyrepo(s)")
 In [3]: author_counts = stats.author_commit_count(org_df)
 
 In [4]: author_counts.head()
-Out[4]: 
+Out[4]:
       author_name  commits
 0       John Smith     3059
 1        Sally Joe     2995
@@ -184,7 +189,7 @@ In [2]: projectarea_df = mkdata.create_projectarea_df(ccmServer="https://server:
 In [3]: author_counts = stats.author_commit_count(projectarea_df)
 
 In [4]: author_counts.head()
-Out[4]: 
+Out[4]:
                    author_name  commits
 0                Carol Newbold       35
 1  Jose de Jesus Herrera Ledon       11
@@ -199,13 +204,13 @@ Out[4]:
 In [1]: from devml import (mkdata, stats, state, fetch_repo)
 
 In [2]: dest, token, org = state.get_project_metadata("../project/config.json")
-In [3]: fetch_repo.clone_org_repos(token, org, 
+In [3]: fetch_repo.clone_org_repos(token, org,
         dest, branch="master")
 017-10-14 17:11:36,590 - devml - INFO - Creating Checkout Root:  /tmp/checkout
-2017-10-14 17:11:37,346 - devml - INFO - Found Repo # 1 REPO NAME: flask , URL: git@github.com:pallets/flask.git 
-2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 2 REPO NAME: pallets-sphinx-themes , URL: git@github.com:pallets/pallets-sphinx-themes.git 
-2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 3 REPO NAME: markupsafe , URL: git@github.com:pallets/markupsafe.git 
-2017-10-14 17:11:37,348 - devml - INFO - Found Repo # 4 REPO NAME: jinja , URL: git@github.com:pallets/jinja.git 
+2017-10-14 17:11:37,346 - devml - INFO - Found Repo # 1 REPO NAME: flask , URL: git@github.com:pallets/flask.git
+2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 2 REPO NAME: pallets-sphinx-themes , URL: git@github.com:pallets/pallets-sphinx-themes.git
+2017-10-14 17:11:37,347 - devml - INFO - Found Repo # 3 REPO NAME: markupsafe , URL: git@github.com:pallets/markupsafe.git
+2017-10-14 17:11:37,348 - devml - INFO - Found Repo # 4 REPO NAME: jinja , URL: git@github.com:pallets/jinja.git
 2017-10-14 17:11:37,349 - devml - INFO - Found Repo # 5 REPO NAME: werkzeug , URL: git@githu
 In [4]: !ls -l /tmp/checkout
 total 0
@@ -228,7 +233,7 @@ drwxr-xr-x  25 noahgift  wheel  800 Oct 14 17:11 werkzeug
 ## Advanced CLI-Author:  Get Activity Statistics for a Tree of Checkouts or a Checkout and sort
 
 ```
- ➜  devml git:(master) ✗ dml gstats activity --path /tmp/checkout --sort active_days 
+ ➜  devml git:(master) ✗ dml gstats activity --path /tmp/checkout --sort active_days
 
 Top Unique Active Days:               author_name  active_days active_duration  active_ratio
 86         Armin Ronacher          989       3817 days      0.260000
@@ -257,53 +262,53 @@ Top Unique Active Days:               author_name  active_days active_duration  
 
 ## Advanced CLI-Churn:  Get churn by file type
 
-#### Get the top ten files sorted by churn count with the extension .py: 
+#### Get the top ten files sorted by churn count with the extension .py:
 
 ```
 ✗ dml gstats churn --path /Users/noahgift/src/flask --limit 10 --ext .py
 2017-10-15 12:10:55,783 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
                        files  churn_count  line_count extension  \
-1            b'flask/app.py'          316      2183.0       .py   
-3        b'flask/helpers.py'          176      1019.0       .py   
-5    b'tests/flask_tests.py'          127         NaN       .py   
-7                b'flask.py'          104         NaN       .py   
-8                b'setup.py'           80       112.0       .py   
-10           b'flask/cli.py'           75       759.0       .py   
-11      b'flask/wrappers.py'           70       194.0       .py   
-12      b'flask/__init__.py'           65        49.0       .py   
-13           b'flask/ctx.py'           62       415.0       .py   
-14  b'tests/test_helpers.py'           62       888.0       .py   
+1            b'flask/app.py'          316      2183.0       .py
+3        b'flask/helpers.py'          176      1019.0       .py
+5    b'tests/flask_tests.py'          127         NaN       .py
+7                b'flask.py'          104         NaN       .py
+8                b'setup.py'           80       112.0       .py
+10           b'flask/cli.py'           75       759.0       .py
+11      b'flask/wrappers.py'           70       194.0       .py
+12      b'flask/__init__.py'           65        49.0       .py
+13           b'flask/ctx.py'           62       415.0       .py
+14  b'tests/test_helpers.py'           62       888.0       .py
 
-    relative_churn  
-1             0.14  
-3             0.17  
-5              NaN  
-7              NaN  
-8             0.71  
-10            0.10  
-11            0.36  
-12            1.33  
-13            0.15  
-14            0.07  
+    relative_churn
+1             0.14
+3             0.17
+5              NaN
+7              NaN
+8             0.71
+10            0.10
+11            0.36
+12            1.33
+13            0.15
+14            0.07
 ```
 #### Get descriptive statistics for extension .py and compare to another repository
 
 In this example, flask, this repo and cpython are all compared to see how the median churn is.
 
 ```
-(.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median  
+(.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/flask --ext .py --statistic median
 2017-10-15 12:39:44,781 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/flask]
 MEDIAN Statistics:
 
            churn_count  line_count  relative_churn
-extension                                         
+extension
 .py                  2        85.0            0.13
 (.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/devml --ext .py --statistic median
 2017-10-15 12:40:10,999 - devml.post_processing - INFO - Running churn cmd: [git log --name-only --pretty=format:] at path [/Users/noahgift/src/devml]
 MEDIAN Statistics:
 
            churn_count  line_count  relative_churn
-extension                                         
+extension
 .py                  1        62.5            0.02
 
 (.devml) ➜  devml git:(master) dml gstats metachurn --path /Users/noahgift/src/cpython --ext .py --statistic median
@@ -311,7 +316,7 @@ extension
 MEDIAN Statistics:
 
            churn_count  line_count  relative_churn
-extension                                         
+extension
 .py                  7       169.5             0.1
 
 ```
