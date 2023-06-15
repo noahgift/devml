@@ -53,22 +53,22 @@ An easy way to run the project locally is to check the repo out and in the root 
 make setup
 ```
 
+
 Then create a virtualenv in  ~/.devml:
 
-```text
+```
 $ python3 -m venv ~/.devml
 ```
 
-Next, source that virtualenv:
+### Next, source that virtualenv:
 
 ```
 source ~/.devml/bin/activate
 ```
 
-Run Make All (installs, lints and tests)
-
-```text
-$ make all
+#### Run Make All (installs, lints and tests)
+```
+make all
 
 # #Example output
 #(.devml) ➜  devml git:(master) make all

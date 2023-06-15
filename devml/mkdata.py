@@ -122,45 +122,44 @@ def create_org_df(path):
     os.chdir(original_cwd)
     return converted_df
 
-def create_projectarea_df(ccmServer, projectArea, userId, password):
+# startDate and endDate are str of the form: YYYY/MM/DD
+def create_projectarea_df(ccmServer, projectArea, userId, password, startDate=None, endDate=None):
     """Returns a Pandas DataFrome of change sets delivered to components in a project area"""
     # Get all the users managed by this server, we need this to get the author_email
     columns = ['date', 'id', 'author_name', 'author_email', 'message', 'repo', 'commits']
-    # login to EWM CCM
-    p = Popen(f'lscm login -r {ccmServer} -u {userId} -P {password}', shell=True, stdout=PIPE)
-    resp = p.stdout.read().decode('utf-8')
-    if not resp.startswith('Logged in'):
-        log.error(f'Cannot login to {ccmServer}')
-        return None
     df = pd.DataFrame(columns=columns)
-    p = Popen(f'lscm list users  -r {ccmServer} -j', shell=True, stdout=PIPE)
-    ewmUsers = json.load(p.stdout)
-    users = {user['name']: user['mail'] for user in ewmUsers}
+    created_after = f'--created-after {startDate}' if startDate is not None else ''
+    created_before = f'--created-before {endDate}' if endDate is not None else ''
     # get the components in the project area
-    p = Popen(f'lscm list components  -r {ccmServer} -j', shell=True, stdout=PIPE)
-    components = json.load(p.stdout)
-    components = pd.DataFrame.from_dict(components['components']) if components != None else None
+    p = Popen(f'scm list components  -r {ccmServer} --visibility projectarea --process-area "{projectArea}" --all -u {userId} -P {password} -j', shell=True, stdout=PIPE)
+    components = json.load(p.stdout) # a JSON object containing a components array of component objects: name, url, uuid
+    components = components['components'] if components is not None else None
     if components is None or len(components) == 0:
         log.info(f'Could not get components in project area: "{projectArea}"')
         return df
-    for component in components.name:
-        # get all the completed change sets delivered to this component
-        p = Popen(f'lscm list changesets  -r {ccmServer} -C "{component}" -j', shell=True, stdout=PIPE)
+    for component in components:
+        # get all the completed change sets associated with this component
+        p = Popen(f"scm list changesets  -r {ccmServer} -C '{component['uuid']}' {created_before} {created_after} -m all -u {userId} -P {password} -j", shell=True, stdout=PIPE)
         changes = None
         try:
-            changes = json.load(p.stdout)
+            changes = json.load(p.stdout) # a JSON object with one changes keyword that is an array of change objects
             changes = changes['changes'] if changes != None else None
         except:
+            log.exception(f"Could not get change sets for component: {component['name']}")
             continue
-        changesDicts = [dict(list(zip(columns, [change['modified'],change['uuid'],change['author'],None,change['comment'],component,None]))) for change in changes]
+        changesDicts = [dict(list(zip(columns, [
+            change['modified'], # changeset modification date, the last time its state was changed
+            change['uuid'],     # changeset uuid
+            change['author'],   # changeset author_name
+            change['author-details']['mail'],
+            change['comment'],
+            component['name'],
+            1]))) for change in changes]
         df = pd.concat([df, pd.DataFrame.from_dict(changesDicts)])
     df['date'] = pd.to_datetime(df['date'])
     pd.DataFrame.set_index(df, keys='date', drop=True, inplace=True)
-    df['author_email'] = df['author_name'].apply(lambda author_name: users[author_name] if author_name in users else None)
-    df['commits']=1
     p = Popen(f'lscm logout -r {ccmServer}', shell=True, stdout=PIPE)
     return df
-
 
 
 def get_git_uid():
